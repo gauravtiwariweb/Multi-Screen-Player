@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const stopBtn = document.getElementById("stopBtn");
     const pauseBtn = document.getElementById("pauseBtn");
     const resumeBtn = document.getElementById("resumeBtn");
-    const muteBtn = document.getElementById("muteBtn");
-    const unmuteBtn = document.getElementById("unmuteBtn");
     const youtubeLinkInput = document.getElementById("youtubeLink");
 
     const iframeCount = 12;
@@ -40,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Invalid YouTube link!");
             return;
         }
-        const embedURL = `https://www.youtube.com/embed/${videoID}?autoplay=1&loop=1&playlist=${videoID}&controls=0&enablejsapi=1`;
+        const embedURL = `https://www.youtube.com/embed/${videoID}?autoplay=1&loop=1&playlist=${videoID}&controls=0`;
         videoIframes.forEach((iframe) => {
             iframe.src = embedURL;
         });
@@ -67,20 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Mute videos
-    const muteVideos = () => {
-        videoIframes.forEach((iframe) => {
-            iframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
-        });
-    };
-
-    // Unmute videos
-    const unmuteVideos = () => {
-        videoIframes.forEach((iframe) => {
-            iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-        });
-    };
-
     // Event Listeners
     playBtn.addEventListener("click", () => {
         videoURL = youtubeLinkInput.value;
@@ -90,10 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     stopBtn.addEventListener("click", stopVideos);
     pauseBtn.addEventListener("click", pauseVideos);
     resumeBtn.addEventListener("click", resumeVideos);
-    muteBtn.addEventListener("click", muteVideos);
-    unmuteBtn.addEventListener("click", unmuteVideos);
 
     // Initialize on load
     initializeIframes();
 });
-
